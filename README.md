@@ -18,7 +18,7 @@
 ### Association
 
 - has_many :items
-- has_one :purchase, through :item
+- has_many :purchases
 
 ## items テーブル（商品テーブル）
 
@@ -38,7 +38,7 @@
 ### Association
 
 - belongs_to :member
-- has_one    :purchase, through :member
+- has_one    :purchase
 
 ### Memo
 
