@@ -2,18 +2,18 @@
 
 # テーブル設計
 
-## members テーブル（ユーザー管理テーブル）
+## users テーブル（ユーザー管理テーブル）
 
-| Column          | Type   | Options     |
-| --------------- | ------ | ----------- |
-| nickname        | string | null: false |
-| email           | string | null: false |
-| password        | string | null: false |
-| last_name       | string | null: false |
-| first_name      | string | null: false |
-| kana_last_name  | string | null: false |
-| kana_first_name | string | null: false |
-| birthday        | date   | null: false |
+| Column              | Type   | Options     |
+| ------------------- | ------ | ----------- |
+| nickname            | string | null: false |
+| email               | string | null: false |
+| encrypted_password  | string | null: false |
+| last_name           | string | null: false |
+| first_name          | string | null: false |
+| kana_last_name      | string | null: false |
+| kana_first_name     | string | null: false |
+| birthday            | date   | null: false |
 
 ### Association
 
@@ -24,21 +24,19 @@
 
 | Column                      | Type        | Options                         |
 | --------------------------- | ----------- | ------------------------------- |
-| item_name                   | string      | null: false                     |
-| item_explanation            | string      | null: false                     |
+| item_name                   | text        | null: false                     |
+| item_explanation            | text        | null: false                     |
 | item_category_id            | integer     | null: false                     |
 | item_status_id              | integer     | null: false                     |
 | item_shipping_fee_status_id | integer     | null: false                     |
 | item_prefecture_id          | integer     | null: false                     |
 | item_scheduled_delivery_id  | integer     | null: false                     |
 | sell_price                  | integer     | null: false                     |
-| member_id                   | references  | null: false, foreign_key: true  |
-| purchase_id                 | references  | foreign_key: true               |
+| user_id                     | references  | null: false, foreign_key: true  |
 
 ### Association
-
-- belongs_to :member
-- has_one    :purchase
+- belongs_to :user
+- has_one :purchase
 
 ### Memo
 
@@ -49,18 +47,29 @@
 
 | Column                   | Type        | Options                         |
 | ------------------------ | ----------- | ------------------------------- |
-| zipcode                  | string      | null: false                     |
-| prefecture_id            | integer     | null: false                     |
-| address1                 | string      | null: false                     |
-| address2                 | string      | null: false                     |
-| address_building_name    | string      |                                 |
-| telephone                | string      | null: false                     |
 | item_id                  | references  | null: false, foreign_key: true  |
-| member_id                | references  | null: false, foreign_key: true  |
+| user_id                  | references  | null: false, foreign_key: true  |
 
 ### Association
-belongs_to :member
+belongs_to :user
 belongs_to :item
+has_one :address
+
+## addresses テーブル(住所登録テーブル)
+
+| Column                   | Type        | Options                         |
+| ------------------------ | ----------- | ------------------------------- |
+| zipcode                  | string      | null: false                     |
+| prefecture_id            | integer     | null: false                     |
+| city                     | string      | null: false                     |
+| address                  | string      | null: false                     |
+| address_building_name    | string      |                                 |
+| telephone                | string      | null: false                     |
+| purchase_id              | references  | null: false, foreign_key: true  |
+
+### Association
+
+- belongs_to :purchase
 
 ### Memo
 
