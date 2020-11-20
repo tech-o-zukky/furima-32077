@@ -24,15 +24,15 @@
 
 | Column                      | Type        | Options                         |
 | --------------------------- | ----------- | ------------------------------- |
-| item_name                   | text        | null: false                     |
+| item_name                   | string      | null: false                     |
 | item_explanation            | text        | null: false                     |
 | item_category_id            | integer     | null: false                     |
 | item_status_id              | integer     | null: false                     |
 | item_shipping_fee_status_id | integer     | null: false                     |
-| item_prefecture_id          | integer     | null: false                     |
+| prefecture_id               | integer     | null: false                     |
 | item_scheduled_delivery_id  | integer     | null: false                     |
 | sell_price                  | integer     | null: false                     |
-| user_id                     | references  | null: false, foreign_key: true  |
+| user                        | references  | null: false, foreign_key: true  |
 
 ### Association
 - belongs_to :user
@@ -47,8 +47,8 @@
 
 | Column                   | Type        | Options                         |
 | ------------------------ | ----------- | ------------------------------- |
-| item_id                  | references  | null: false, foreign_key: true  |
-| user_id                  | references  | null: false, foreign_key: true  |
+| item                     | references  | null: false, foreign_key: true  |
+| user                     | references  | null: false, foreign_key: true  |
 
 ### Association
 belongs_to :user
@@ -65,7 +65,7 @@ has_one :address
 | address                  | string      | null: false                     |
 | address_building_name    | string      |                                 |
 | telephone                | string      | null: false                     |
-| purchase_id              | references  | null: false, foreign_key: true  |
+| purchase                 | references  | null: false, foreign_key: true  |
 
 ### Association
 
