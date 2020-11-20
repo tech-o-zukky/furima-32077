@@ -1,24 +1,76 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# テーブル設計
 
-Things you may want to cover:
+## users テーブル（ユーザー管理テーブル）
 
-* Ruby version
+| Column              | Type   | Options     |
+| ------------------- | ------ | ----------- |
+| nickname            | string | null: false |
+| email               | string | null: false |
+| encrypted_password  | string | null: false |
+| last_name           | string | null: false |
+| first_name          | string | null: false |
+| kana_last_name      | string | null: false |
+| kana_first_name     | string | null: false |
+| birthday            | date   | null: false |
 
-* System dependencies
+### Association
 
-* Configuration
+- has_many :items
+- has_many :purchases
 
-* Database creation
+## items テーブル（商品テーブル）
 
-* Database initialization
+| Column                      | Type        | Options                         |
+| --------------------------- | ----------- | ------------------------------- |
+| item_name                   | string      | null: false                     |
+| item_explanation            | text        | null: false                     |
+| item_category_id            | integer     | null: false                     |
+| item_status_id              | integer     | null: false                     |
+| item_shipping_fee_status_id | integer     | null: false                     |
+| prefecture_id               | integer     | null: false                     |
+| item_scheduled_delivery_id  | integer     | null: false                     |
+| sell_price                  | integer     | null: false                     |
+| user                        | references  | null: false, foreign_key: true  |
 
-* How to run the test suite
+### Association
+- belongs_to :user
+- has_one :purchase
 
-* Services (job queues, cache servers, search engines, etc.)
+### Memo
 
-* Deployment instructions
+- image(商品画像)はGem:Active Strageで実装するため、上記のカラムに含めない。
+- キーと値の管理にActiveHashを利用する(item_category_id, item_status_id, item_shipping_fee_status_id, prefecture_id, item_scheduled_delivery_id)
 
-* ...
+## purchases テーブル(商品購入テーブル)
+
+| Column                | Type        | Options                         |
+| --------------------- | ----------- | ------------------------------- |
+| item                  | references  | null: false, foreign_key: true  |
+| user                  | references  | null: false, foreign_key: true  |
+
+### Association
+belongs_to :user
+belongs_to :item
+has_one :address
+
+## addresses テーブル(住所登録テーブル)
+
+| Column                   | Type        | Options                         |
+| ------------------------ | ----------- | ------------------------------- |
+| zipcode                  | string      | null: false                     |
+| prefecture_id            | integer     | null: false                     |
+| city                     | string      | null: false                     |
+| address                  | string      | null: false                     |
+| address_building_name    | string      |                                 |
+| telephone                | string      | null: false                     |
+| purchase                 | references  | null: false, foreign_key: true  |
+
+### Association
+
+- belongs_to :purchase
+
+### Memo
+
+- キーと値の管理にActiveHashを利用する(prefecture_id）
