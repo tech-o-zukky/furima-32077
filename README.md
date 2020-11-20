@@ -41,7 +41,7 @@
 ### Memo
 
 - image(商品画像)はGem:Active Strageで実装するため、上記のカラムに含めない。
-- キーと値の管理にActiveHashを利用する(item_category_id, item_status_id, item_shipping_fee_status_id, prefecture_id, item_scheduled_delivery_id)
+- キーと値の管理にActiveHashを利用する(item_category_id, item_status_id, item_shipping_fee_status_id, item_prefecture_id, item_scheduled_delivery_id)
 
 ## purchases テーブル(商品購入テーブル)
 
