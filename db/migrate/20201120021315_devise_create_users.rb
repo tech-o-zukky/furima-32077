@@ -7,6 +7,14 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.0]
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 
+      # add furima-32077
+      t.string :nickname,           null: false
+      t.string :last_name,          null: false
+      t.string :first_name,         null: false
+      t.string :kana_last_name,     null: false
+      t.string :kana_first_name,    null: false
+      t.date   :birthday,           null: false
+
       ## Recoverable
       t.string   :reset_password_token
       t.datetime :reset_password_sent_at
