@@ -10,7 +10,8 @@ class Item < ApplicationRecord
 
   # アソシエーション
   belongs_to :user
-
+  has_one_attached :image
+  
   # バリデーションが必須項目のみ
   with_options presence: true do
     validates :item_name
