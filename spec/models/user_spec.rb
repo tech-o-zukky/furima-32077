@@ -95,7 +95,7 @@ RSpec.describe User, type: :model do
       end
 
       it 'passwordと確認用passwordが一致しなければ登録できない' do
-        @user.password_confirmation = @user.password + 'abc' # 確認用パスワードに「abc」の文字を追加
+        @user.password_confirmation = "#{@user.password}abc" # 確認用パスワードに「abc」の文字を追加
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end

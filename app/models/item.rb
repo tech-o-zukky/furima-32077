@@ -10,7 +10,7 @@ class Item < ApplicationRecord
   # アソシエーション
   belongs_to :user
   has_one_attached :image
-  
+
   # バリデーションが必須項目のみ
   with_options presence: true do
     validates :item_name
@@ -19,15 +19,15 @@ class Item < ApplicationRecord
   end
 
   # ActiveHash利用カラムのバリデーション
-  with_options presence: true,  numericality: { other_than: 0, message: "can't be blank" } do
+  with_options presence: true, numericality: { other_than: 0, message: "can't be blank" } do
     validates :item_category_id
     validates :item_status_id
     validates :item_shipping_fee_status_id
     validates :prefecture_id
     validates :item_scheduled_delivery_id
   end
-  
+
   # 価格のバリデーション
-  validates :sell_price, presence: true, 
-                         numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
+  validates :sell_price, presence: true,
+                         numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }
 end

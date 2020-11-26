@@ -66,26 +66,25 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Sell price can't be blank")
       end
-
     end
 
     context '新規登録:異常系(価格のチェック)' do
       it '価格の範囲が、¥300~¥9,999,999の間でなければエラー(¥300より小さい場合)' do
         @item.sell_price = 299
         @item.valid?
-        expect(@item.errors.full_messages).to include("Sell price must be greater than or equal to 300")
+        expect(@item.errors.full_messages).to include('Sell price must be greater than or equal to 300')
       end
 
       it '価格の範囲が、¥300~¥9,999,999の間でなければエラー(¥9,999,999より大きい場合)' do
-        @item.sell_price = 10000000
+        @item.sell_price = 10_000_000
         @item.valid?
-        expect(@item.errors.full_messages).to include("Sell price must be less than or equal to 9999999")
+        expect(@item.errors.full_messages).to include('Sell price must be less than or equal to 9999999')
       end
 
       it '販売価格は半角数字のみ保存可能であること' do
-        @item.sell_price = "５００" #全角で入力
+        @item.sell_price = '５００' # 全角で入力
         @item.valid?
-        expect(@item.errors.full_messages).to include("Sell price is not a number")
+        expect(@item.errors.full_messages).to include('Sell price is not a number')
       end
     end
   end
