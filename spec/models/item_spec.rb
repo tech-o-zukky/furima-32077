@@ -31,35 +31,68 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Item explanation can't be blank")
       end
 
-      it 'カテゴリーの情報が必須であること' do
+      # ActiveHashのカラムが0のパターン
+      it 'カテゴリーの情報が必須であること(値が0のパターン)' do
         @item.item_category_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include("Item category can't be blank")
       end
 
-      it '商品の状態についての情報が必須であること' do
+      it '商品の状態についての情報が必須であること(値が0のパターン)' do
         @item.item_status_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include("Item status can't be blank")
       end
 
-      it '配送料の負担についての情報が必須であること' do
+      it '配送料の負担についての情報が必須であること(値が0のパターン)' do
         @item.item_shipping_fee_status_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include("Item shipping fee status can't be blank")
       end
 
-      it '発送元の地域についての情報が必須であること' do
+      it '発送元の地域についての情報が必須であること(値が0のパターン)' do
         @item.prefecture_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include("Prefecture can't be blank")
       end
 
-      it '発送までの日数についての情報が必須であること' do
+      it '発送までの日数についての情報が必須であること(値が0のパターン)' do
         @item.item_scheduled_delivery_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include("Item scheduled delivery can't be blank")
       end
+
+      # ActiveHashのカラムがnilのパターン
+      it 'カテゴリーの情報が必須であること(値がnilのパターン)' do
+        @item.item_category_id = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Item category can't be blank")
+      end
+
+      it '商品の状態についての情報が必須であること(値がnilのパターン)' do
+        @item.item_status_id = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Item status can't be blank")
+      end
+
+      it '配送料の負担についての情報が必須であること(値がnilのパターン)' do
+        @item.item_shipping_fee_status_id = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Item shipping fee status can't be blank")
+      end
+
+      it '発送元の地域についての情報が必須であること(値がnilのパターン)' do
+        @item.prefecture_id = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Prefecture can't be blank")
+      end
+
+      it '発送までの日数についての情報が必須であること(値がnilのパターン)' do
+        @item.item_scheduled_delivery_id = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Item scheduled delivery can't be blank")
+      end
+      # ActiveHashの必須確認ここまで
 
       it '価格についての情報が必須であること' do
         @item.sell_price = nil
