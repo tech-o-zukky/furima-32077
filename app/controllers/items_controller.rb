@@ -1,6 +1,5 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
-  before_action :move_to_index, only: [:create]
 
   def index
   end
@@ -28,7 +27,4 @@ class ItemsController < ApplicationController
     ).merge(user_id: current_user.id)
   end
 
-  def move_to_index
-    redirect_to action: :index unless user_signed_in?
-  end
 end
