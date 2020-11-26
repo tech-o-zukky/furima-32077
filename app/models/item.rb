@@ -19,7 +19,7 @@ class Item < ApplicationRecord
   end
 
   # ActiveHash利用カラムのバリデーション
-  with_options presence: true,  numericality: { other_than: 0 } do
+  with_options presence: true,  numericality: { other_than: 0, message: "can't be blank" } do
     validates :item_category_id
     validates :item_status_id
     validates :item_shipping_fee_status_id
