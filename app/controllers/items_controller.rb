@@ -48,8 +48,6 @@ class ItemsController < ApplicationController
 
   def edit_user_check
     edit_user = Item.find(params[:id])
-    unless user_signed_in? && current_user.id == edit_user.user_id
-      redirect_to action: :index
-    end
+    redirect_to action: :index unless user_signed_in? && current_user.id == edit_user.user_id
   end
 end
