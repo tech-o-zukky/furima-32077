@@ -1,5 +1,5 @@
 <li class='list'>
-  <%= link_to "#" do %>
+  <%= link_to item_path(itemlist.id) do %>
   <div class='item-img-content'>
     <%= image_tag itemlist.image, class: "item-img" if itemlist.image.attached? %>
     <%# 商品が売れていればsold outを表示しましょう ※商品購入機能の実装時に対応する %>
@@ -13,7 +13,7 @@
       <%= itemlist.item_name %>
     </h3>
     <div class='item-price'>
-      <span><%= itemlist.sell_price %>円<br><%= itemlist.item_shipping_fee_status.name %></span>
+      <span><%= itemlist.sell_price.to_s(:delimited) %>円<br><%= itemlist.item_shipping_fee_status.name %></span>
       <div class='star-btn'>
         <%= image_tag "star.png", class:"star-icon" %>
         <span class='star-count'>0</span>
