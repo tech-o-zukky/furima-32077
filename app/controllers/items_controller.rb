@@ -1,8 +1,12 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @items = Item.all.order("created_at desc")
+    @items = Item.all.order('created_at desc')
+  end
+
+  def show
+    @item = Item.find(params[:id])
   end
 
   def new
@@ -27,5 +31,4 @@ class ItemsController < ApplicationController
       :prefecture_id, :item_scheduled_delivery_id, :sell_price
     ).merge(user_id: current_user.id)
   end
-
 end
