@@ -1,13 +1,12 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :edit_user_check, only: [:edit]
+  before_action :get_item, only: [:show, :edit, :update]
 
   def index
     @items = Item.all.order('created_at desc')
   end
 
   def show
-    @item = Item.find(params[:id])
   end
 
   def new
@@ -24,11 +23,10 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    @item = Item.find(params[:id])
+    redirect_to action: :index unless user_signed_in? && current_user.id == @item.user.id
   end
 
   def update
-    @item = Item.find(params[:id])
     if @item.update(item_params)
       redirect_to item_path(@item.id)
     else
@@ -46,8 +44,7 @@ class ItemsController < ApplicationController
     ).merge(user_id: current_user.id)
   end
 
-  def edit_user_check
-    edit_user = Item.find(params[:id])
-    redirect_to action: :index unless user_signed_in? && current_user.id == edit_user.user_id
+  def get_item
+    @item = Item.find(params[:id])
   end
 end
