@@ -7,7 +7,7 @@ app/assets/stylesheets/items/new.css %>
   </header>
   <div class="items-sell-main">
     <h2 class="items-sell-title">商品の情報を入力</h2>
-    <%= form_with model: @item, url: item_path, method: :post, local: true do |f| %>
+    <%= form_with model: @item, url: item_path, local: true do |f| %>
 
     <%= render partial: "shared/error_messages", locals: { model: f.object } %>
 
