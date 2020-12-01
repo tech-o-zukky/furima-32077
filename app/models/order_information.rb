@@ -14,7 +14,7 @@ class OrderInformation
     validates :prefecture_id, numericality: { other_than: 0, message: "can't be blank" } 
     validates :city
     validates :address
-    validates :telephone, format: { with: /\A\d{10,11}\z/ }
+    validates :telephone, format: { with: /\A\d{,11}\z/ }
   end
 
   #購入時情報の保存処理
