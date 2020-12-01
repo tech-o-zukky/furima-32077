@@ -13,23 +13,23 @@ class OrdersController < ApplicationController
     if @order_info.valid?
       pay_item
       @order_info.save
-      return redirect_to root_path
+      redirect_to root_path
     else
       render action: :index
     end
   end
-  
+
   private
 
   def order_params
     params.require(:order_information).permit(
       :zipcode, :prefecture_id, :city,
-      :address, :address_building_name, :telephone, :purchase 
+      :address, :address_building_name, :telephone, :purchase
     ).merge(token: params[:token], user_id: current_user.id, item_id: @item.id)
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]  # PAY.JPテスト用
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']  # PAY.JPテスト用
     Payjp::Charge.create(
       amount: @item.sell_price,      # 商品の値段
       card: order_params[:token],    # カードトークン
@@ -37,19 +37,15 @@ class OrdersController < ApplicationController
     )
   end
 
-  #URL直接入力チェック（出品者）
+  # URL直接入力チェック（出品者）
   def seller_user_check
     @item = Item.find(params[:item_id])
-     if current_user.id == @item.user.id
-      redirect_to action: :index
-     end
+    redirect_to action: :index if current_user.id == @item.user.id
   end
 
-  #URL直接入力チェック（購入済み）
+  # URL直接入力チェック（購入済み）
   def purchased_check
     @item = Item.find(params[:item_id])
-     if Purchase.find_by(item_id: @item.id) != nil
-      redirect_to root_path
-     end
+    redirect_to root_path if Purchase.find_by(item_id: @item.id) != nil
   end
 end

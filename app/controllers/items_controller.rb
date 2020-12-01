@@ -54,10 +54,8 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-  #URL直接入力チェック（購入済み）
+  # URL直接入力チェック（購入済み）
   def purchased_check
-    if Purchase.find_by(item_id: @item.id) != nil
-      redirect_to root_path
-    end
+    redirect_to root_path if Purchase.find_by(item_id: @item.id) != nil
   end
 end

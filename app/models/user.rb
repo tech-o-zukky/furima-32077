@@ -20,7 +20,7 @@ class User < ApplicationRecord
 
   validates :birthday, presence: true
 
-  #アソシエーション
+  # アソシエーション
   has_many :items
   has_many :purchases
 end
