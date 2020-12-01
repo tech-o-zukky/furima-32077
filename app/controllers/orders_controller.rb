@@ -2,7 +2,9 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @item = Item.find(params[:item_id])
+    seller_user_check
+    purchased_check
+    #@item = Item.find(params[:item_id])
     @order_info = OrderInformation.new
   end
 
@@ -36,4 +38,19 @@ class OrdersController < ApplicationController
     )
   end
 
+  #URL直接入力チェック（出品者）
+  def seller_user_check
+    @item = Item.find(params[:item_id])
+     if current_user.id == @item.user.id
+      redirect_to action: :index
+     end
+  end
+
+  #URL直接入力チェック（購入済み）
+  def purchased_check
+    @item = Item.find(params[:item_id])
+     if Purchase.find_by(item_id: @item.id) != nil
+      redirect_to root_path
+     end
+  end
 end
