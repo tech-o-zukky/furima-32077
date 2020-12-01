@@ -4,7 +4,6 @@ class OrdersController < ApplicationController
   def index
     seller_user_check
     purchased_check
-    #@item = Item.find(params[:item_id])
     @order_info = OrderInformation.new
   end
 
