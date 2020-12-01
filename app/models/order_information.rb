@@ -3,15 +3,10 @@ class OrderInformation
 
   attr_accessor :token, :card_no, :card_exp_month, :card_exp_year, :card_cvc,
                 :zipcode, :prefecture_id, :city,
-                :address, :address_building_name, :telephone
+                :address, :address_building_name, :telephone, :user_id, :item_id
 
   #バリデーション:カード情報
-  with_options presence: true do
-    validates :card_no, format: { with: /\A(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6011[0-9]{12}|3(?:0[0-5]|[68][0-9])[0-9]{11}|3[47][0-9]{13})\z/ }
-    validates :card_exp_month, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 12 }
-    validates :card_exp_year
-    validates :card_cvc
-  end
+  validates :token, presence: true
 
   #バリデーション:addresses
   with_options presence: true do
@@ -22,4 +17,9 @@ class OrderInformation
     validates :telephone, format: { with: /\A\d{10,11}\z/ }
   end
 
+  #購入時情報の保存処理
+  def save
+    purchase = Purchase.create(item_id: item_id, user_id: user_id)    
+    Address.create(zipcode: zipcode, prefecture_id: prefecture_id, city: city, address: address, address_building_name: address_building_name, telephone: telephone, purchase_id: purchase.id )
+  end
 end
