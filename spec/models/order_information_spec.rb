@@ -105,17 +105,36 @@ RSpec.describe OrderInformation, type: :model do
         expect(@order_info.errors.full_messages).to include('Zipcode is invalid. Include hyphen(-)')
       end
 
+      it '郵便番号:フォーマットが合わない場合はエラー(ハイフンと数字。123-4567となる)' do
+        @order_info.zipcode = '123abcd'
+        @order_info.valid?
+        expect(@order_info.errors.full_messages).to include('Zipcode is invalid. Include hyphen(-)')
+      end
+
+      it '都道府県:0の場合はエラー' do
+        @order_info.prefecture_id = '0'
+        @order_info.valid?
+        expect(@order_info.errors.full_messages).to include("Prefecture can't be blank")
+      end
+
       it '電話番号:ハイフンは不要で、11桁以内であること(09012345678が正。桁オーバーはエラー)' do
         @order_info.telephone = '090123456789'
         @order_info.valid?
         expect(@order_info.errors.full_messages).to include('Telephone is invalid')
       end
 
-      it '電話番号にはハイフンは不要で、11桁以内であること(09012345678が正。ハイフンはエラー)' do
+      it '電話番号:ハイフンは不要で、11桁以内であること(09012345678が正。ハイフンはエラー)' do
         @order_info.telephone = '090-2345678'
         @order_info.valid?
         expect(@order_info.errors.full_messages).to include('Telephone is invalid')
       end
+
+      it '電話番号:数字以外はエラーであること(09012345678が正)' do
+        @order_info.telephone = '090abcdefgh'
+        @order_info.valid?
+        expect(@order_info.errors.full_messages).to include('Telephone is invalid')
+      end
+      
     end
   end
 end
