@@ -1,7 +1,7 @@
 class OrderInformation
   include ActiveModel::Model
 
-  attr_accessor :token, :card_no, :card_exp_month, :card_exp_year, :card_cvc,
+  attr_accessor :token, 
                 :zipcode, :prefecture_id, :city,
                 :address, :address_building_name, :telephone, :user_id, :item_id
 

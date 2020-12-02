@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
+  before_action :get_item, only: [:index, :create]
 
   def index
     url_check
@@ -7,7 +8,6 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order_info = OrderInformation.new(order_params)
     if @order_info.valid?
       pay_item
@@ -38,7 +38,10 @@ class OrdersController < ApplicationController
 
   # URL直接入力チェック（出品者か購入済みの場合はトップページへ遷移する）
   def url_check
-    @item = Item.find(params[:item_id])
     redirect_to root_path if (current_user.id == @item.user.id || Purchase.find_by(item_id: @item.id) != nil)
+  end
+
+  def get_item
+    @item = Item.find(params[:item_id])
   end
 end
