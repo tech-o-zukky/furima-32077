@@ -24,6 +24,7 @@ class ItemsController < ApplicationController
 
   def edit
     redirect_to action: :index unless user_signed_in? && current_user.id == @item.user.id
+    purchased_check
   end
 
   def update
@@ -51,5 +52,10 @@ class ItemsController < ApplicationController
 
   def get_item
     @item = Item.find(params[:id])
+  end
+
+  # URL直接入力チェック（購入済み）
+  def purchased_check
+    redirect_to root_path if Purchase.find_by(item_id: @item.id) != nil
   end
 end
